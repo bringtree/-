@@ -1,4 +1,4 @@
 # scauzhengFang
-# 正方免密登录
+# 正方免验证码登录
 # npm install 
 # node app.js
