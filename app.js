@@ -3,12 +3,12 @@ const cheerio = require('cheerio');
 var querystring = require('querystring');
 var iconv = require('iconv-lite');
 
-// 下面也有一个
 // TextBox1输入账号 TextBox2输入密码
+// 如我的账号201625010408 密码XXXX
 var info = {
   '__VIEWSTATE': 'dDwxMTE4MjQwNDc1Ozs+rmNp3epuZ8UHR4Au0OOL8z0PKMg=',
   'TextBox1': '201625010408',
-  'TextBox2': 'XXXXXX',
+  'TextBox2': 'XXXX',
   'RadioButtonList1': '%D1%A7%C9%FA',
   'Button1': '+%B5%C7+%C2%BC+'
 }
@@ -24,13 +24,7 @@ var option = {uri: 'http://202.116.160.170/default4.aspx', method: 'GET', resolv
 var optionsIndex = {
   uri: 'http://202.116.160.170/default4.aspx',
   method: 'POST',
-  form: {
-    '__VIEWSTATE': 'dDwxMTE4MjQwNDc1Ozs+rmNp3epuZ8UHR4Au0OOL8z0PKMg=',
-    'TextBox1': '201625010408',
-    'TextBox2': 'XXXXXXXX',
-    'RadioButtonList1': '%D1%A7%C9%FA',
-    'Button1': '+%B5%C7+%C2%BC+'
-  },
+  form: info,
   headers: {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate',
@@ -51,7 +45,7 @@ var optionsIndex = {
 
 // 用于查看登录是否成功
 var optionsClass = {
-  uri: 'http://202.116.160.170/xs_main.aspx?xh='+info.TextBox1,
+  uri: 'http://202.116.160.170/xs_main.aspx?xh=' + info.TextBox1,
   method: 'GET',
   headers: {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -59,7 +53,7 @@ var optionsClass = {
     'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4',
     'Connection': 'keep-alive',
     'Host': '202.116.160.170',
-    'Referer': 'http://202.116.160.170/xs_main.aspx?xh='+info.TextBox1,
+    'Referer': 'http://202.116.160.170/xs_main.aspx?xh=' + info.TextBox1,
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
   },
@@ -75,7 +69,8 @@ request(option)
   .then(() => {
     request(optionsIndex)
       .then(data => iconv.decode(data, 'gbk'))
-      .catch((e) => {})
+      .catch((e) => {
+      })
       .then(() => {
         request(optionsClass)
           .then((data) => iconv.decode(data, 'gbk'))
